@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>DrawAccidentSketch</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./draggabilly/dist/draggabilly.pkgd.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="./stylesheets/main2.css" rel="stylesheet" />
+    <link href="./stylesheets/sliderbar.css" rel="stylesheet" />
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    .dot circle {
+        fill: lightsteelblue;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+    
+    .dot circle.dragging {
+        fill: red;
+        stroke: brown;
+    }
+    
+    .axis line {
+        fill: none;
+        stroke: #ddd;
+        shape-rendering: crispEdges;
+        vector-effect: non-scaling-stroke;
+    }
+    </style>
+</head>
+
+<body>
+</body>
+
+</html>
+<script type="text/javascript" src="./js/d3.v3.js"></script>
+<script type="text/javascript">
+$(function() {
+    var margin = {
+            top: -5,
+            right: -5,
+            bottom: -5,
+            left: -5
+        },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed);
+
+    var drag = d3.behavior.drag()
+        .on('drag', function(d) { 
+              d3.select(this).attr({
+                'cx': d.x = d3.event.x,
+                'cy': d.y = d3.event.y,
+              }); 
+            })
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.right + ")")
+        .call(zoom);
+
+    var rect = svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all");
+
+    var container = svg.append("g");
+
+    container.append("g")
+        .attr("class", "x axis")
+        .selectAll("line")
+        .data(d3.range(0, width, 10))
+        .enter().append("line")
+        .attr("x1", function(d) {
+            return d;
+        })
+        .attr("y1", 0)
+        .attr("x2", function(d) {
+            return d;
+        })
+        .attr("y2", height);
+
+    container.append("g")
+        .attr("class", "y axis")
+        .selectAll("line")
+        .data(d3.range(0, height, 10))
+        .enter().append("line")
+        .attr("x1", 0)
+        .attr("y1", function(d) {
+            return d;
+        })
+        .attr("x2", width)
+        .attr("y2", function(d) {
+            return d;
+        });
+
+    var data = [{
+        'cx': 210,
+        'cy': 210,
+    }, {
+        'cx': 75,
+        'cy': 75,
+    }, {
+        'cx': 200,
+        'cy': 30,
+    }, {
+        'cx': 80,
+        'cy': 190,
+    }, {
+        'cx': 100,
+        'cy': 100,
+    }];
+
+    dot = container.append("g")
+        .attr("class", "dot")
+        .selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+        .attr("r", 5)
+        .attr({
+            'cx': function(d) {
+                return d.cx;
+            },
+            'cy': function(d) {
+                return d.cy;
+            }
+        })
+        .call(drag);
+
+    function dottype(d) {
+        d.x = +d.x;
+        d.y = +d.y;
+        return d;
+    }
+
+    function zoomed() {
+        container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
+    function dragstarted(d) {
+        d3.event.sourceEvent.stopPropagation();
+        d3.select(this).classed("dragging", true);
+    }
+
+    function dragged(d) {
+        d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+    }
+
+    function dragended(d) {
+        d3.select(this).classed("dragging", false);
+    }
+
+});
+</script>

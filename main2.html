@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>DrawAccidentSketch</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./draggabilly/dist/draggabilly.pkgd.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="./stylesheets/main2.css" rel="stylesheet" />
+    <link href="./stylesheets/sliderbar.css" rel="stylesheet" />
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="fab btn-group show-on-hover">
+        <div id="inbox">
+            <div class="fab btn-group show-on-hover dropup">
+                <div data-toggle="tooltip" data-placement="left" title="Compose" style="">
+                    <button type="button" class="btn btn-danger btn-io dropdown-toggle" data-toggle="dropdown">
+                        <span class="fa-stack fa-2x">
+								<i class="fa fa-plus fa-stack-1x fa-inverse fab-primary"></i>
+								<i class="fa fa-pencil fa-stack-1x fa-inverse fab-secondary"></i>
+							</span>
+                    </button>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a href="#" data-toggle="tooltip" data-placement="left" class="menu-li" id="Car" title="Car"><i class="fa fa-car"></i></a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="left" class="menu-li" id="Person" title="Person"><i class="fa fa-male"></i></a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="left" class="menu-li" id="Road" title="Road"><i class="fa fa-road"></i></a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="left" class="menu-li" id="Sign" title="Sign"><i class="fa fa-map-signs"></i></a></li>
+                    <div class="menu-bridge"></div>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="DivSilderbar">
+        <div class="silder-bar"></div>
+    </div>
+    <div id="DivSvg"></div>
+</body>
+
+</html>
+<script type="text/javascript" src="./js/bgdraw.js"></script>
+<script type="text/javascript" src="./js/d3.v3.js"></script>
+<script type="text/javascript" src="./js/sliderbar.js"></script>
+<script type="text/javascript" src="./js/picview.js"></script>
+<script type="text/javascript" src="./js/menuview.js"></script>
+<script type="text/javascript">
+$(function() {
+
+    var _oriw;
+    var _orih;
+    var _initCountX;
+    var _initCountY;
+
+    var _mainTimer;
+
+    var _perX = 100; //放大縮小的比例值，未來位在除以 100
+
+    $('.fab').hover(function() {
+        $(this).toggleClass('active');
+    });
+
+    _oriw = $('body')[0].clientWidth;
+    _orih = $('body')[0].clientHeight;
+    _initCountX = Math.round(_oriw / 50);
+    _initCountY = Math.round(_orih / 50);
+
+    var $RuleData = {
+        'height': _orih,
+        'width': _oriw,
+        'dom': '#DivSvg',
+        'Xcount': Math.round(_initCountX),
+        'Ycount': Math.round(_initCountY),
+    };
+
+    create_draw.init($RuleData);
+
+    var $DivSvgDrag = $('#DivSvg').draggabilly();
+
+    //建立 sliderbar 物件
+    var SliderbarObj = new SilderModel();
+    SliderbarObj.CreateCirclesSlider();
+
+    //取得 sliderbar 的結果
+    SliderbarObj.CirclesSlider(function(LargerProportion) {
+        if (_perX == LargerProportion) return;
+
+        _perX = LargerProportion;
+
+        window.clearTimeout(_mainTimer);
+        _mainTimer = window.setTimeout(function() {
+            var w = _oriw * (_perX / 100);
+            var h = _orih * (_perX / 100);
+            $('body').css({
+                'width': w,
+                'height': h
+            });
+            create_draw.changes(w, h, _initCountX, _initCountY);
+
+            $('#DivSvg').css({
+                'left': Number($('#DivSvg').attr('data-left')),
+                'top': Number($('#DivSvg').attr('data-top')),
+            });
+
+            $('.center-point').css({
+                'left': screen.availWidth / 2,
+                'top': screen.availHeight / 2
+            });
+
+
+        }, 1000);
+    });
+
+    var MenuObj = new MenuModel();
+    MenuObj.ChooseObject(function(e){
+    	create_draw.createObj(e);
+    });
+
+    // $('#DivSvg').css({
+    // 	'left': (screen.availWidth - _oriw) / 2,
+    // 	'top': (screen.availHeight - _orih) / 2
+    // });
+
+});
+</script>

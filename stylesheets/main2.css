@@ -1,0 +1,335 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 8, ../sass/main2.scss */
+body {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+/* line 17, ../sass/main2.scss */
+body #DivSvg .fixed-point {
+  position: absolute;
+  background: blue;
+  width: 10px;
+  height: 10px;
+  display: block;
+  z-index: 99999999;
+  left: 0;
+  top: 0;
+}
+/* line 53, ../sass/main2.scss */
+body .DivSilderbar {
+  position: absolute;
+  display: block;
+  top: 95vh;
+  z-index: 99999999;
+}
+/* line 61, ../sass/main2.scss */
+body .btn-group {
+  display: block;
+  bottom: -40px;
+  z-index: 99999999;
+}
+/* line 67, ../sass/main2.scss */
+body .btn-group > div {
+  margin-left: 20px;
+}
+/* line 72, ../sass/main2.scss */
+body .center-point {
+  position: absolute;
+  background: red;
+  width: 10px;
+  height: 10px;
+  display: block;
+  z-index: 99999999;
+}
+/* line 81, ../sass/main2.scss */
+body .fab {
+  cursor: pointer;
+}
+/* line 85, ../sass/main2.scss */
+body .fab #inbox .show-on-hover {
+  position: absolute;
+}
+/* line 88, ../sass/main2.scss */
+body .fab #inbox .show-on-hover:hover > ul.dropdown-menu {
+  display: block;
+}
+/* line 93, ../sass/main2.scss */
+body .fab #inbox .btn-io {
+  border-radius: 50%;
+  height: 54px;
+  width: 54px;
+  padding: 0 !important;
+  box-shadow: 0px 3px 7px 0px rgba(202, 124, 124, 0.72);
+}
+/* line 101, ../sass/main2.scss */
+body .fab #inbox .dropup .dropdown-menu, body .fab #inbox .navbar-fixed-bottom .dropdown .dropdown-menu {
+  bottom: auto;
+  margin-bottom: 1px;
+  margin-bottom: -5px;
+  padding-bottom: 30px;
+}
+/* line 108, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu-right {
+  right: 0 !Important;
+  left: auto !Important;
+}
+/* line 113, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  min-width: 50px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: center;
+  list-style: none;
+  background-color: rgba(255, 255, 255, 0) !important;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 6px 12px transparent !important;
+  box-shadow: 0 6px 12px transparent !important;
+}
+/* line 130, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-bridge {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  opacity: 0.3;
+  top: 20px;
+  z-index: -999999;
+}
+/* line 140, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-content {
+  border-radius: 0px 20px 20px 20px;
+  max-height: 500px;
+  background: white;
+  box-shadow: 4px 4px 12px 4px rgba(51, 51, 102, 0.5);
+  position: absolute;
+  left: 200%;
+}
+/* line 150, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-content .tab-content {
+  width: auto;
+  height: auto;
+}
+/* line 154, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-content .tab-content .imgstyle {
+  width: 150px;
+  height: 150px;
+  float: left;
+  margin: 20px;
+  opacity: 0.5;
+  background: #DDDDDD;
+}
+/* line 162, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-content .tab-content .imgstyle:hover {
+  opacity: 1.0;
+  background: white;
+}
+/* line 167, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu .menu-content .tab-content .imgstyle img {
+  max-width: 150px;
+  max-height: 150px;
+}
+/* line 175, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li > a {
+  display: block;
+  padding: 0;
+  padding-top: 4px;
+  margin-top: 40px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  background: #fff;
+  white-space: nowrap;
+  width: 40px;
+  height: 40px;
+  border: solid 1px #ccc;
+  border-radius: 50px;
+  font-size: 21px;
+  box-shadow: 0px 3px 7px 0px rgba(203, 203, 203, 0.72);
+}
+/* line 194, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:first-child > a {
+  background: #0066FF !important;
+  color: #fff !important;
+  opacity: 0.5;
+  position: relative;
+}
+/* line 200, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:first-child > a:hover {
+  opacity: 1.0;
+}
+/* line 204, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:first-child > a.add-bridge:after {
+  border-left: solid 70px #0066FF;
+  border-top: solid 5px #0066FF;
+  border-bottom: solid 5px #0066FF;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 90%;
+  bottom: 40%;
+}
+/* line 216, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(4) > a {
+  background: #FFAA33;
+  color: #fff;
+  opacity: 0.5;
+  position: relative;
+}
+/* line 222, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(4) > a:hover {
+  opacity: 1.0;
+}
+/* line 226, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(4) > a.add-bridge:after {
+  border-left: solid 70px #FFAA33;
+  border-top: solid 5px #FFAA33;
+  border-bottom: solid 5px #FFAA33;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 90%;
+  bottom: 40%;
+}
+/* line 238, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(3) > a {
+  background: #000000;
+  color: #fff;
+  opacity: 0.5;
+  position: relative;
+}
+/* line 244, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(3) > a:hover {
+  opacity: 1.0;
+}
+/* line 248, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(3) > a.add-bridge:after {
+  border-left: solid 70px #000000;
+  border-top: solid 5px #000000;
+  border-bottom: solid 5px #000000;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 90%;
+  bottom: 40%;
+}
+/* line 260, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(2) > a {
+  background: #2CAC26;
+  color: #fff;
+  opacity: 0.5;
+  position: relative;
+}
+/* line 266, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(2) > a:hover {
+  opacity: 1.0;
+}
+/* line 270, ../sass/main2.scss */
+body .fab #inbox .dropdown-menu > li:nth-child(2) > a.add-bridge:after {
+  border-left: solid 70px #2CAC26;
+  border-top: solid 5px #2CAC26;
+  border-bottom: solid 5px #2CAC26;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 90%;
+  bottom: 40%;
+}
+/* line 283, ../sass/main2.scss */
+body .fab #inbox .fa-iox {
+  font-size: 22px;
+}
+/* line 290, ../sass/main2.scss */
+body .fab.active .fab-primary {
+  opacity: 0;
+  transform: rotate(225deg);
+}
+/* line 295, ../sass/main2.scss */
+body .fab.active .fab-secondary {
+  opacity: 1;
+  transform: rotate(0);
+}
+/* line 301, ../sass/main2.scss */
+body .fab .fab-primary, body .fab .fab-secondary {
+  transition: all 0.35s ease-in-out;
+}
+/* line 305, ../sass/main2.scss */
+body .fab .fab-secondary {
+  opacity: 0;
+  transform: rotate(-225deg);
+}
