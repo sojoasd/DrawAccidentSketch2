@@ -56,6 +56,7 @@ $(function() {
         var _xAxisGrid;
 
         var _drag;
+        var _drags;
 
         var zoomed = function() {
             _container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -95,10 +96,34 @@ $(function() {
                 .on('drag', function(d) {
                     d.x += d3.event.dx;
                     d.y += d3.event.dy;
+                    $(this).attr({
+                        'data-tx': d.x,
+                        'data-ty': d.y,
+                    });
                     d3.select(this).attr("transform", function(d, i) {
                         // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
                         return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
                     });
+                })
+                .on('dragend', function(d) {
+                    d3.select(this).classed("dragging", false);
+                });
+
+            _drags = d3.behavior.drag()
+                .on('dragstart', function(d) {
+                    d3.event.sourceEvent.stopPropagation();
+                    d3.select(this).classed("dragging", true);
+                    // console.log($(this).parent().parent().data('tx'));
+                })
+                .on('drag', function(d) {
+                    console.log($(this).parent().parent().data('otx'));
+
+                    // d.x += d3.event.dx;
+                    // d.y += d3.event.dy;
+                    // d3.select(this).attr("transform", function(d, i) {
+                    //     // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
+                    //     return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
+                    // });
                 })
                 .on('dragend', function(d) {
                     d3.select(this).classed("dragging", false);
@@ -142,13 +167,19 @@ $(function() {
                     "x": 20,
                     "y": 20,
                     "r": 1,
-                    "scale": 1
+                    "scale": 1,
                 }])
                 .attr({
                     'class':'drag-g',
                     'x': 0,
                     'y': 0,
                     'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
+                    'data-os':1,
+                    'data-ns':0,
+                    'data-otx':20,
+                    'data-oty':20,
+                    'data-ntx':0,
+                    'data-nty':0
                 }).call(_drag);
 
             // dgrop.on('click', function(){
@@ -188,70 +219,70 @@ $(function() {
                 'y':-5,
                 'width':10,
                 'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'n-p',
-                'x':95,
-                'y':-5,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'ne-p',
-                'x':195,
-                'y':-5,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'e-p',
-                'x':195,
-                'y':95,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'nw-p',
-                'x':195,
-                'y':195,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'n-p',
-                'x':95,
-                'y':195,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'ne-p',
-                'x':-5,
-                'y':195,
-                'width':10,
-                'height':10,
-            });
-            points
-            .append('rect')
-            .attr({
-                'class':'e-p',
-                'x':-5,
-                'y':95,
-                'width':10,
-                'height':10,
-            });
+            }).call(_drags);
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'n-p',
+            //     'x':95,
+            //     'y':-5,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'ne-p',
+            //     'x':195,
+            //     'y':-5,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'e-p',
+            //     'x':195,
+            //     'y':95,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'nw-p',
+            //     'x':195,
+            //     'y':195,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'n-p',
+            //     'x':95,
+            //     'y':195,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'ne-p',
+            //     'x':-5,
+            //     'y':195,
+            //     'width':10,
+            //     'height':10,
+            // });
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'e-p',
+            //     'x':-5,
+            //     'y':95,
+            //     'width':10,
+            //     'height':10,
+            // });
 
             var img = dgrop.append('image')
                 .attr({
