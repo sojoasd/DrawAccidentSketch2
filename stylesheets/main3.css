@@ -71,23 +71,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 body .drag-g:hover {
   cursor: move;
 }
-/* line 13, ../sass/main3.scss */
-body .drag-g .drag-point rect {
+/* line 14, ../sass/main3.scss */
+body .drag-point rect {
   pointer-events: all;
 }
-/* line 15, ../sass/main3.scss */
-body .drag-g .drag-point rect.nw-p {
+/* line 16, ../sass/main3.scss */
+body .drag-point rect.nw-p {
   cursor: nw-resize;
 }
-/* line 18, ../sass/main3.scss */
-body .drag-g .drag-point rect.ne-p {
+/* line 19, ../sass/main3.scss */
+body .drag-point rect.ne-p {
   cursor: ne-resize;
 }
-/* line 21, ../sass/main3.scss */
-body .drag-g .drag-point rect.e-p {
+/* line 22, ../sass/main3.scss */
+body .drag-point rect.e-p {
   cursor: e-resize;
 }
-/* line 24, ../sass/main3.scss */
-body .drag-g .drag-point rect.n-p {
+/* line 25, ../sass/main3.scss */
+body .drag-point rect.n-p {
   cursor: n-resize;
 }

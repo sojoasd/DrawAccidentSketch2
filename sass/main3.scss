@@ -9,21 +9,21 @@ body {
         &:hover {
             cursor: move;
         }
-        .drag-point {
-            rect {
-                pointer-events: all;
-                &.nw-p {
-                    cursor: nw-resize;
-                }
-                &.ne-p {
-                    cursor: ne-resize;
-                }
-                &.e-p {
-                    cursor: e-resize;
-                }
-                &.n-p {
-                    cursor: n-resize;
-                }
+    }
+    .drag-point {
+        rect {
+            pointer-events: all;
+            &.nw-p {
+                cursor: nw-resize;
+            }
+            &.ne-p {
+                cursor: ne-resize;
+            }
+            &.e-p {
+                cursor: e-resize;
+            }
+            &.n-p {
+                cursor: n-resize;
             }
         }
     }

@@ -56,7 +56,9 @@ $(function() {
         var _xAxisGrid;
 
         var _drag;
-        var _drags;
+        var _dragX;
+        var _dragY;
+        var _dragXY;
 
         var _pg;
 
@@ -108,52 +110,47 @@ $(function() {
                         'data-tx': d.x,
                         'data-ty': d.y,
                     });
+                    var className = $(this)[0].id;
+                    var $subrect = $('.' + className);
+                    console.log($(this));
+                    for (var i = 0; i < $subrect.length; i++) {
+                        $($subrect[i]).find('rect').attr({
+                            'transform':"translate(" + [d.x+95, d.y-5] + "),rotate(0,0,0),scale(1,1)"
+                        });
+                    };
                     d3.select(this).attr("transform", function(d, i) {
-                        // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
                         return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
                     });
                 })
                 .on('dragend', function(d) {
                     d3.select(this).classed("dragging", false);
-                    var otx = $(this)[0].getAttribute("data-otx");
-                    var oty = $(this)[0].getAttribute("data-oty");
-                    var tx = $(this)[0].getAttribute("data-tx");
-                    var ty = $(this)[0].getAttribute("data-ty");
-                    
-                    // console.log($(this).find('.drag-point rect'));
-                    $rects = $(this).find('.drag-point rect');
-                    for (var i = 0; i < $rects.length; i++) {
-                        var $subrect = $($rects[i]);
-                        var sx = $subrect[0].getAttribute('x');
-                        var sy = $subrect[0].getAttribute('y');
-                        $subrect.attr({
-                            'data-sx': tx,
-                            'data-sy': ty
-                        });
-                    };
                 });
 
-            _drags = d3.behavior.drag()
+            _dragX = d3.behavior.drag()
                 .on('dragstart', function(d) {
                     d3.event.sourceEvent.stopPropagation();
                     d3.select(this).classed("dragging", true);
-                    // console.log(this);
-                    // console.log($(this).parents("g[class='drag-g']")[0].getAttribute("data-otx"));
-                    // console.log($(this).parent().parent().data('tx'));
                 })
                 .on('drag', function(d) {
-                    var pg = $(this).parents("g[class='drag-g']")[0];
-                    var otx = pg.getAttribute("data-otx");
-                    var oty = pg.getAttribute("data-oty");
-                    var tx = pg.getAttribute("data-tx");
-                    var ty = pg.getAttribute("data-ty");
+                    d.x += d3.event.dx;
+                    d3.select(this).attr("transform", function(d, i) {
+                        return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
+                    });
+                })
+                .on('dragend', function(d) {
+                    d3.select(this).classed("dragging", false);
+                });
 
-                    // d.x += d3.event.dx;
-                    // d.y += d3.event.dy;
-                    // d3.select(this).attr("transform", function(d, i) {
-                    //     // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
-                    //     return "translate(" + [0, d.y] + "),rotate(0,0,0),scale(1,1)";
-                    // });
+            _dragY = d3.behavior.drag()
+                .on('dragstart', function(d) {
+                    d3.event.sourceEvent.stopPropagation();
+                    d3.select(this).classed("dragging", true);
+                })
+                .on('drag', function(d) {
+                    d.y += d3.event.dy;
+                    d3.select(this).attr("transform", function(d, i) {
+                        return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
+                    });
                 })
                 .on('dragend', function(d) {
                     d3.select(this).classed("dragging", false);
@@ -200,42 +197,47 @@ $(function() {
                     "scale": 1,
                 }])
                 .attr({
+                    'id':'drag1',
                     'class':'drag-g',
-                    'x': 0,
-                    'y': 0,
-                    'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
-                    'data-otx':20,
-                    'data-oty':20,
+                    'data-dx': 20,
+                    'data-dy': 20,
+                    'transform': 'scale( 1 1 )translate( 20 20 )rotate( 0 0 0 )',
                 }).call(_drag);
-
-            // dgrop.on('click', function(){
-            //     $(this).find('.dgrop-frames').show();
-            // });
 
             var frames = dgrop.append('g')
                 .attr({
                     'class': 'drag-frames',
-                    // 'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
                     'stroke-width': 0.5,
-                    // 'style':'display:none'
                 })
                 .append('rect')
                 .attr({
-                    'x':0,
-                    'y':0,
                     'width':200,
                     'height': 200,
                     'stroke': 'blue',
                     'fill': 'none'
                 });
 
-            var points = dgrop.append('g')
+            var img = dgrop.append('image')
                 .attr({
-                    'class': 'drag-point',
+                    'width': 200,
+                    'height': 200,
+                    'xlink:href': './img/car.svg'
+                });
+
+            var points = _container.append("g")
+                .data([{
+                    "x": 0,
+                    "y": 0,
+                    "r": 1,
+                    "scale": 1,
+                }])
+                .attr({
+                    'class': 'drag1 drag-point',
                     'stroke-width': 0.5,
                     'stroke':'red',
-                    'fill':'none'
-                });
+                    'fill':'white',
+                    'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
+                }).call(_dragY);
 
             // points
             // .append('rect')
@@ -246,17 +248,16 @@ $(function() {
             //     'width':10,
             //     'height':10,
             // }).call(_drags);
-            points
-            .append('rect')
+            var srect1 = points.append('rect')
             .attr({
                 'class':'n-p',
-                'x':95,
-                'y':-5,
+                'x':0,
+                'y':0,
                 'width':10,
                 'height':10,
-            }).call(_drags);
-            // points
-            // .append('rect')
+                'transform': 'scale( 1 1 )translate( 115 15 )rotate( 0 0 0 )',
+            });
+            // var srect2 = points.append('rect')
             // .attr({
             //     'class':'ne-p',
             //     'x':195,
@@ -310,15 +311,6 @@ $(function() {
             //     'height':10,
             // });
 
-            var img = dgrop.append('image')
-                .attr({
-                    'x': 0,
-                    'y': 0,
-                    'width': 200,
-                    'height': 200,
-                    // 'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
-                    'xlink:href': './img/car.svg'
-                });
         };
 
         return {
