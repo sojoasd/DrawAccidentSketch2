@@ -58,6 +58,8 @@ $(function() {
         var _drag;
         var _drags;
 
+        var _pg;
+
         var zoomed = function() {
             _container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
         }
@@ -92,6 +94,12 @@ $(function() {
                 .on('dragstart', function(d) {
                     d3.event.sourceEvent.stopPropagation();
                     d3.select(this).classed("dragging", true);
+                    var tx = $(this)[0].getAttribute("data-tx");
+                    var ty = $(this)[0].getAttribute("data-ty");
+                    $(this).attr({
+                        'data-otx': tx,
+                        'data-oty': ty,
+                    });
                 })
                 .on('drag', function(d) {
                     d.x += d3.event.dx;
@@ -107,22 +115,44 @@ $(function() {
                 })
                 .on('dragend', function(d) {
                     d3.select(this).classed("dragging", false);
+                    var otx = $(this)[0].getAttribute("data-otx");
+                    var oty = $(this)[0].getAttribute("data-oty");
+                    var tx = $(this)[0].getAttribute("data-tx");
+                    var ty = $(this)[0].getAttribute("data-ty");
+                    
+                    // console.log($(this).find('.drag-point rect'));
+                    $rects = $(this).find('.drag-point rect');
+                    for (var i = 0; i < $rects.length; i++) {
+                        var $subrect = $($rects[i]);
+                        var sx = $subrect[0].getAttribute('x');
+                        var sy = $subrect[0].getAttribute('y');
+                        $subrect.attr({
+                            'data-sx': tx,
+                            'data-sy': ty
+                        });
+                    };
                 });
 
             _drags = d3.behavior.drag()
                 .on('dragstart', function(d) {
                     d3.event.sourceEvent.stopPropagation();
                     d3.select(this).classed("dragging", true);
+                    // console.log(this);
+                    // console.log($(this).parents("g[class='drag-g']")[0].getAttribute("data-otx"));
                     // console.log($(this).parent().parent().data('tx'));
                 })
                 .on('drag', function(d) {
-                    console.log($(this).parent().parent().data('otx'));
+                    var pg = $(this).parents("g[class='drag-g']")[0];
+                    var otx = pg.getAttribute("data-otx");
+                    var oty = pg.getAttribute("data-oty");
+                    var tx = pg.getAttribute("data-tx");
+                    var ty = pg.getAttribute("data-ty");
 
                     // d.x += d3.event.dx;
                     // d.y += d3.event.dy;
                     // d3.select(this).attr("transform", function(d, i) {
                     //     // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
-                    //     return "translate(" + [d.x, d.y] + "),rotate(0,0,0),scale(1,1)";
+                    //     return "translate(" + [0, d.y] + "),rotate(0,0,0),scale(1,1)";
                     // });
                 })
                 .on('dragend', function(d) {
@@ -174,12 +204,8 @@ $(function() {
                     'x': 0,
                     'y': 0,
                     'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
-                    'data-os':1,
-                    'data-ns':0,
                     'data-otx':20,
                     'data-oty':20,
-                    'data-ntx':0,
-                    'data-nty':0
                 }).call(_drag);
 
             // dgrop.on('click', function(){
@@ -211,24 +237,24 @@ $(function() {
                     'fill':'none'
                 });
 
+            // points
+            // .append('rect')
+            // .attr({
+            //     'class':'nw-p',
+            //     'x':-5,
+            //     'y':-5,
+            //     'width':10,
+            //     'height':10,
+            // }).call(_drags);
             points
             .append('rect')
             .attr({
-                'class':'nw-p',
-                'x':-5,
+                'class':'n-p',
+                'x':95,
                 'y':-5,
                 'width':10,
                 'height':10,
             }).call(_drags);
-            // points
-            // .append('rect')
-            // .attr({
-            //     'class':'n-p',
-            //     'x':95,
-            //     'y':-5,
-            //     'width':10,
-            //     'height':10,
-            // });
             // points
             // .append('rect')
             // .attr({
