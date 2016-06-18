@@ -96,6 +96,7 @@ $(function() {
                     d3.select(this).classed("dragging", true);
                     var tx = $(this)[0].getAttribute("data-tx");
                     var ty = $(this)[0].getAttribute("data-ty");
+                    console.log(d);
                     $(this).attr({
                         'data-otx': tx,
                         'data-oty': ty,
@@ -135,6 +136,7 @@ $(function() {
 
             _drags = d3.behavior.drag()
                 .on('dragstart', function(d) {
+                    d.y = 0;
                     d3.event.sourceEvent.stopPropagation();
                     d3.select(this).classed("dragging", true);
                     // console.log(this);
@@ -147,13 +149,13 @@ $(function() {
                     var oty = pg.getAttribute("data-oty");
                     var tx = pg.getAttribute("data-tx");
                     var ty = pg.getAttribute("data-ty");
-
+                    // console.log('d.y:' + d.y + ' ; d3.event.dx:' + d3.event.dx)
                     // d.x += d3.event.dx;
-                    // d.y += d3.event.dy;
-                    // d3.select(this).attr("transform", function(d, i) {
-                    //     // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
-                    //     return "translate(" + [0, d.y] + "),rotate(0,0,0),scale(1,1)";
-                    // });
+                    d.y += d3.event.dy;
+                    d3.select(this).attr("transform", function(d, i) {
+                        // return "translate(" + [d.x, d.y] + "),rotate(" + 0 + ",160, 160),scale(" + d.scale + "," + d.scale + ")";
+                        return "translate(" + [0, d.y] + "),rotate(0,0,0),scale(1,1)";
+                    });
                 })
                 .on('dragend', function(d) {
                     d3.select(this).classed("dragging", false);
@@ -226,7 +228,7 @@ $(function() {
                     'width':200,
                     'height': 200,
                     'stroke': 'blue',
-                    'fill': 'none'
+                    'fill': 'none',
                 });
 
             var points = dgrop.append('g')
@@ -234,7 +236,17 @@ $(function() {
                     'class': 'drag-point',
                     'stroke-width': 0.5,
                     'stroke':'red',
-                    'fill':'none'
+                    'fill':'none',
+                });
+
+            var img = dgrop.append('image')
+                .attr({
+                    'x': 0,
+                    'y': 0,
+                    'width': 200,
+                    'height': 200,
+                    // 'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
+                    'xlink:href': './img/car.svg',
                 });
 
             // points
@@ -282,15 +294,15 @@ $(function() {
             //     'width':10,
             //     'height':10,
             // });
-            // points
-            // .append('rect')
-            // .attr({
-            //     'class':'n-p',
-            //     'x':95,
-            //     'y':195,
-            //     'width':10,
-            //     'height':10,
-            // });
+            points
+            .append('rect')
+            .attr({
+                'class':'n-p',
+                'x':95,
+                'y':195,
+                'width':10,
+                'height':10,
+            }).call(_drags);
             // points
             // .append('rect')
             // .attr({
@@ -310,15 +322,7 @@ $(function() {
             //     'height':10,
             // });
 
-            var img = dgrop.append('image')
-                .attr({
-                    'x': 0,
-                    'y': 0,
-                    'width': 200,
-                    'height': 200,
-                    // 'transform': 'scale( 1 1 )translate( 0 0 )rotate( 0 0 0 )',
-                    'xlink:href': './img/car.svg'
-                });
+            
         };
 
         return {
